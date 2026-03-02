@@ -450,6 +450,147 @@
       line-height: 1.8;
     }
 
+  
+    /* ---------- (5) 청첩장 4페이지 미리보기 ---------- */
+    .inv-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 42px;
+    }
+    .inv-item{
+      border:0;
+      padding:0;
+      background:transparent;
+      border-radius: 18px;
+      overflow:hidden;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      border:1px solid var(--line);
+      aspect-ratio: 3 / 4;
+    }
+    .inv-item img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.01);
+      transition: transform .22s ease;
+    }
+    .inv-item:active img{ transform: scale(1.03); }
+
+    /* ---------- (6) 청첩장 4p 뷰어 ---------- */
+    .cardviewer{
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,.78);
+      z-index: 2000;
+      padding: 18px;
+    }
+    .cardviewer.is-open{ display: grid; }
+    .cardviewer__wrap{
+      width: min(92vw, 820px);
+      display: grid;
+      grid-template-columns: 44px 1fr 44px;
+      align-items: center;
+      gap: 10px;
+    }
+    .cardviewer__frame{
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 90px rgba(0,0,0,.38);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .cardviewer__img{
+      width: 100%;
+      max-height: 86vh;
+      object-fit: contain;
+      display: block;
+      background: rgba(255,255,255,.02);
+    }
+    .cardviewer__nav{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.25);
+      color: #fff;
+      font-size: 30px;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      user-select: none;
+    }
+    .cardviewer__nav:active{ transform: scale(0.98); }
+    .cardviewer__close{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.25);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 2001;
+    }
+    .cardviewer__dots{
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+    .cardviewer__dot{
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.35);
+      border: 1px solid rgba(255,255,255,.18);
+      cursor: pointer;
+    }
+    .cardviewer__dot.is-active{
+      width: 18px;
+      background: rgba(255,255,255,.85);
+    }
+    .cardviewer__hint{
+      margin-top: 10px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      letter-spacing: var(--letter-tight);
+    }
+    @media (max-width:520px){
+      .cardviewer__wrap{ grid-template-columns: 36px 1fr 36px; }
+      .cardviewer__nav{ width: 36px; height: 36px; font-size: 26px; }
+    }
+
+  
+    /* ---------- (7) 계좌 복사 + 간편송금 버튼 ---------- */
+    .account-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .account-actions .btn{
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-size: 13px;
+      letter-spacing: var(--letter-tight);
+    }
+    .account-actions .btn:hover{ box-shadow: 0 8px 18px rgba(0,0,0,.06); transform: translateY(-1px); }
+
   </style>
 </head>
 
@@ -504,6 +645,52 @@
         </div>
       </div>
     </section>
+    <!-- 청첩장 4페이지 -->
+    <section class="section center" id="inv4">
+      <div class="content reveal">
+        <div class="kicker">INVITATION CARD</div>
+        <h2 class="title serif" style="margin-top:12px;">청첩장</h2>
+
+        <div class="inv-grid" aria-label="청첩장 4페이지 미리보기">
+          <button class="inv-item" data-page="0" type="button" aria-label="청첩장 1페이지 열기">
+            <img src="images/예담 청첩장-01.png" alt="청첩장 1페이지" loading="lazy" onerror="this.style.display='none'">
+          </button>
+          <button class="inv-item" data-page="1" type="button" aria-label="청첩장 2페이지 열기">
+            <img src="images/예담 청첩장-02.png" alt="청첩장 2페이지" loading="lazy" onerror="this.style.display='none'">
+          </button>
+          <button class="inv-item" data-page="2" type="button" aria-label="청첩장 3페이지 열기">
+            <img src="images/예담 청첩장-03.png" alt="청첩장 3페이지" loading="lazy" onerror="this.style.display='none'">
+          </button>
+          <button class="inv-item" data-page="3" type="button" aria-label="청첩장 4페이지 열기">
+            <img src="images/예담 청첩장-04.png" alt="청첩장 4페이지" loading="lazy" onerror="this.style.display='none'">
+          </button>
+        </div>
+
+        <div style="height:14px;"></div>
+        <div class="center" style="font-size:12px; color:var(--muted); letter-spacing: var(--letter-tight);">
+          청첩장을 누르면 전체 화면으로 4페이지가 열립니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- 청첩장 4p 뷰어 -->
+    <div class="cardviewer" id="cardviewer" aria-hidden="true">
+      <button class="cardviewer__close" id="cvClose" aria-label="닫기">✕</button>
+
+      <div class="cardviewer__wrap" role="dialog" aria-label="청첩장 보기">
+        <button class="cardviewer__nav cardviewer__prev" id="cvPrev" aria-label="이전">‹</button>
+
+        <figure class="cardviewer__frame">
+          <img id="cvImg" class="cardviewer__img" alt="청첩장 페이지">
+        </figure>
+
+        <button class="cardviewer__nav cardviewer__next" id="cvNext" aria-label="다음">›</button>
+      </div>
+
+      <div class="cardviewer__dots" id="cvDots" aria-label="페이지 선택"></div>
+      <div class="cardviewer__hint">좌우로 넘기거나 스와이프로 4페이지를 확인하세요.</div>
+    </div>
+
 
     <!-- Spacer -->
     <section class="section spacer">
@@ -644,7 +831,7 @@
       <div class="content reveal">
         <div class="center">
           <div class="kicker">WEDDING PHOTOS</div>
-          <h2 class="title serif" style="margin-top:12px;">사진</h2>
+          <h2 class="title serif" style="margin-top:12px;">갤러리</h2>
         </div>
 
         <div class="gallery-grid" aria-label="웨딩 포토 갤러리">
@@ -722,7 +909,12 @@
           <div class="account-item">
             <div class="account-title">신랑측</div>
             <div class="account-name">박성호</div>
-            <div class="account-number">우리 1002-144-613222</div>
+            <div class="account-number" id="acc-groom">우리 1002-144-613222</div>
+            <div class="account-actions" aria-label="신랑측 계좌 액션">
+              <button class="btn" type="button" data-copy="acc-groom">📋 계좌 복사</button>
+              <button class="btn" type="button" data-pay="kakao" data-acc="acc-groom">🟡 카카오페이</button>
+              <button class="btn" type="button" data-pay="toss" data-acc="acc-groom">🔵 토스</button>
+            </div>
           </div>
 
           <div class="account-divider"></div>
@@ -730,7 +922,13 @@
           <div class="account-item">
             <div class="account-title">신부측</div>
             <div class="account-name">서예담</div>
-            <div class="account-number">신한 110-409-365196</div>
+            <div class="account-number" id="acc-bride">신한 110-409-365196</div>
+            <div class="account-actions" aria-label="신랑측 계좌 액션">
+              <button class="btn" type="button" data-copy="acc-groom">📋 계좌 복사</button>
+              <button class="btn" type="button" data-pay="kakao" data-acc="acc-groom">🟡 카카오페이</button>
+              <button class="btn" type="button" data-pay="toss" data-acc="acc-groom">🔵 토스</button>
+            </div>
+      
           </div>
         </div>
 
@@ -814,6 +1012,165 @@
       if(closeBtn) closeBtn.addEventListener("click", close);
       lightbox.addEventListener("click", (e) => { if(e.target === lightbox) close(); });
       document.addEventListener("keydown", (e) => { if(e.key === "Escape" && lightbox.classList.contains("is-open")) close(); });
+    })();
+
+
+
+    // 청첩장 4페이지 뷰어 + 간편송금 버튼
+    (function(){
+      const pages = [
+        "images/예담 청첩장-01.png",
+        "images/예담 청첩장-02.png",
+        "images/예담 청첩장-03.png",
+        "images/예담 청첩장-04.png"
+      ];
+
+      const viewer = document.getElementById("cardviewer");
+      const img = document.getElementById("cvImg");
+      const closeBtn = document.getElementById("cvClose");
+      const prevBtn = document.getElementById("cvPrev");
+      const nextBtn = document.getElementById("cvNext");
+      const dotsWrap = document.getElementById("cvDots");
+
+      let idx = 0;
+
+      function renderDots(){
+        if(!dotsWrap) return;
+        dotsWrap.innerHTML = "";
+        pages.forEach((_, i) => {
+          const d = document.createElement("button");
+          d.type = "button";
+          d.className = "cardviewer__dot" + (i === idx ? " is-active" : "");
+          d.setAttribute("aria-label", (i+1) + "페이지");
+          d.addEventListener("click", () => setIndex(i));
+          dotsWrap.appendChild(d);
+        });
+      }
+
+      function setIndex(i){
+        idx = (i + pages.length) % pages.length;
+        if(img) img.src = pages[idx];
+        renderDots();
+      }
+
+      function openAt(i){
+        if(!viewer || !img) return;
+        viewer.classList.add("is-open");
+        viewer.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        setIndex(i || 0);
+      }
+
+      function close(){
+        if(!viewer) return;
+        viewer.classList.remove("is-open");
+        viewer.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        if(img) img.src = "";
+      }
+
+      function prev(){ setIndex(idx - 1); }
+      function next(){ setIndex(idx + 1); }
+
+      // Bind thumbnail clicks
+      document.querySelectorAll("#inv4 .inv-item").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const p = parseInt(btn.getAttribute("data-page") || "0", 10);
+          openAt(p);
+        });
+      });
+
+      prevBtn && prevBtn.addEventListener("click", prev);
+      nextBtn && nextBtn.addEventListener("click", next);
+      closeBtn && closeBtn.addEventListener("click", close);
+      viewer && viewer.addEventListener("click", (e) => { if(e.target === viewer) close(); });
+
+      document.addEventListener("keydown", (e) => {
+        if(!viewer || !viewer.classList.contains("is-open")) return;
+        if(e.key === "Escape") close();
+        if(e.key === "ArrowLeft") prev();
+        if(e.key === "ArrowRight") next();
+      });
+
+      // Swipe support
+      let startX = null, startY = null;
+      const frame = viewer ? viewer.querySelector(".cardviewer__frame") : null;
+      if(frame){
+        frame.addEventListener("touchstart", (e) => {
+          const t = e.touches[0];
+          startX = t.clientX; startY = t.clientY;
+        }, {passive:true});
+        frame.addEventListener("touchend", (e) => {
+          if(startX === null) return;
+          const t = e.changedTouches[0];
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
+          startX = null; startY = null;
+          if(Math.abs(dx) > 40 && Math.abs(dy) < 60){
+            if(dx > 0) prev(); else next();
+          }
+        }, {passive:true});
+      }
+
+      // Clipboard helper
+      async function copyText(text){
+        try{
+          await navigator.clipboard.writeText(text);
+          alert("감사합니다!");
+        }catch(e){
+          const t = document.createElement("textarea");
+          t.value = text;
+          document.body.appendChild(t);
+          t.select();
+          document.execCommand("copy");
+          t.remove();
+          alert("감사합니다!");
+        }
+      }
+
+      // Try open app scheme, fallback to web
+      function openApp(schemeUrl, webUrl){
+        // On mobile, try scheme, then fallback to web after short delay
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if(!isMobile){
+          window.open(webUrl, "_blank", "noopener");
+          return;
+        }
+        const now = Date.now();
+        window.location.href = schemeUrl;
+        setTimeout(() => {
+          // if user didn't leave, open web
+          if(Date.now() - now < 1500){
+            window.open(webUrl, "_blank", "noopener");
+          }
+        }, 800);
+      }
+
+      // Account actions
+      document.querySelectorAll(".account-actions [data-copy]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-copy");
+          const el = document.getElementById(id);
+          if(el) copyText(el.textContent.trim());
+        });
+      });
+
+      document.querySelectorAll(".account-actions [data-pay]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const accId = btn.getAttribute("data-acc");
+          const el = document.getElementById(accId);
+          const accountText = el ? el.textContent.trim() : "";
+          if(accountText) await copyText(accountText);
+
+          const pay = btn.getAttribute("data-pay");
+          if(pay === "kakao"){
+            // 카카오페이: 앱 오픈(정확한 송금 딥링크는 환경/계정에 따라 다름 → 홈으로 유도)
+            openApp("kakaotalk://kakaopay/home", "https://pay.kakao.com/");
+          }else if(pay === "toss"){
+            openApp("supertoss://", "https://toss.im/");
+          }
+        });
+      });
     })();
 
 </script>
